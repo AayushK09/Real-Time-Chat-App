@@ -20,7 +20,9 @@ const Chat = () => {
   const [username, setUsername] = useState("Anonymous");
 
   useEffect(() => {
-    const loggedInUser = JSON.parse(localStorage.getItem("userRegistrationData"));
+    const loggedInUser = JSON.parse(
+      localStorage.getItem("userRegistrationData")
+    );
     if (loggedInUser) {
       setUsername(loggedInUser[0].name);
     }
@@ -36,11 +38,15 @@ const Chat = () => {
 
   const sendMessage = () => {
     if (message.trim()) {
-      socket.emit("chat message", { username, content: message, timestamp: new Date() });
+      socket.emit("chat message", {
+        username,
+        content: message,
+        timestamp: new Date(),
+      });
       setMessage("");
     }
   };
-    const handleKeyPress = (e) => {
+  const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       sendMessage();
     }
@@ -53,17 +59,19 @@ const Chat = () => {
         margin: "auto",
         marginTop: 2,
         backgroundColor: "background.paper",
-        border: '1px solid #1976d2', 
+        border: "1px solid #1976d2",
         borderRadius: 2,
         boxShadow: 3,
       }}
     >
       <CardContent>
         <Typography variant="h6" gutterBottom align="center">
-          Chat
+          Chat Application
         </Typography>
 
-        <List sx={{ height: 300, overflowY: "auto", marginBottom: 2 }}>
+        <Divider />
+
+        <List sx={{ height: 300, overflowY: "auto" }}>
           {messages.map((msg, index) => (
             <ListItem key={index} sx={{ padding: 0 }}>
               <Paper
@@ -73,12 +81,16 @@ const Chat = () => {
                   margin: 1,
                   display: "flex",
                   alignItems: "center",
-                  backgroundColor: msg.username === username ? 'primary.light' : 'grey.300',
-                  color: msg.username === username ? 'common.white' : 'text.primary',
-                  justifyContent: 'flex-start',
+                  backgroundColor:
+                    msg.username === username ? "primary.light" : "grey.300",
+                  color:
+                    msg.username === username ? "common.white" : "text.primary",
+                  justifyContent: "flex-start",
                 }}
               >
-                <Avatar sx={{ marginRight: 1 }}>{msg.username.charAt(0)}</Avatar>
+                <Avatar sx={{ marginRight: 1 }}>
+                  {msg.username.charAt(0)}
+                </Avatar>
                 <Box>
                   <Typography variant="body1">{msg.content}</Typography>
                   <Typography variant="caption" color="textSecondary">
